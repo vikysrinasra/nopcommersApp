@@ -1,0 +1,73 @@
+test_login.py
+-----------------------------------
+import  pytest
+from selenium import webdriver
+from pagaObjects.loginPage import Loginpage
+
+class Test_001_login:
+    baseUrl="https:/admin-demo.nopcommerce.com/"
+    username="admin@yourstore.com"
+    password="admin"
+
+    def test_HomepageTitle(self,setup):
+        self.driver=setup
+        self.driver.get(self.baseUrl)
+        act_title=self.driver.title
+        self.driver.close()
+        if act_title=="Your store. Login":
+            self.driver.save_screenshot(".\\Screenshots\\" + "test_homepagetitle.png")
+            assert True
+        else:
+
+            assert False
+    def test_login(self,setup):
+            self.driver=setup
+            self.driver.get(self.baseUrl)
+            self.lp=Loginpage(self.driver)
+            self.lp.setUserName(self.username)
+            self.lp.setPassword(self.password)
+            self.lp.clickLogin()
+            act_title=self.driver.title
+            self.driver.close()
+            if act_title=='Dashboard / nopCommerce administration':
+                self.driver.save_screenshot(".\\Screenshots\\" + "test_login.png")
+                assert True
+            else:
+
+                self.driver.close()
+                assert False
+
+----------------------------------------
+conftest.py
+--------------------
+import pytest
+from selenium import webdriver
+@pytest.fixture
+def setup():
+    driver=webdriver.Chrome("C:\Selenium\chromedriver")
+    return driver
+------------------------------------------
+loginPage.py
+------------------
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+
+class Loginpage:
+    textbox_username_id='Email'
+    textbox_password_id='Password'
+    button_login_xpath = "/html/body/div[6]/div/div/div/div/div[2]/div[1]/div/form/div[3]/button"
+    link_logout_linktext='logout'
+    def __init__(self,driver):
+        self.driver=driver
+    def setUserName(self,username):
+        self.driver.find_element(By.ID,self.textbox_username_id).clear()
+        self.driver.find_element(By.ID,self.textbox_username_id).send_keys(username)
+    def setPassword(self,password):
+        self.driver.find_element(By.ID,self.textbox_password_id).clear()
+        self.driver.find_element(By.ID,self.textbox_password_id).send_keys(password)
+
+    def clickLogin(self):
+        self.driver.find_element(By.XPATH,self.button_login_xpath).click()
+    def clickLogout(self):
+        self.driver.find_element(By.LINK_TEXT,self.link_logout_linktext).click() 

@@ -1,0 +1,324 @@
+import logging
+logging.basicConfig(filename="C://Newfolder//test.log",format='%(asctime)s: %(levelname)s: %(message)s',datefmt='%m/%d/%y %I:%M:%S %p', level=logging.DEBUG)
+logging.debug("this is debug msg")
+logging.info("this is info msg")
+logging.error("this is error msg")
+logging.critical("this is critical msg")
+logging.warning("this is warning msg")
+
+
+Method 2:
+
+import logging
+logging.basicConfig(filename="C://Newfolder//test.log",format='%(asctime)s: %(levelname)s: %(message)s',datefmt='%m/%d/%y %I:%M:%S %p')
+logger=logging.getLogger()
+logger.setLevel(level=logging.DEBUG)
+logger.debug("this is debug msg")
+logger.info("this is info msg")
+logger.error("this is error msg")
+logger.critical("this is critical msg")
+logger.warning("this is warning msg")
+
+========================================================================================================================================================================================
+UnitTest:
+
+import unittest
+class Test(unittest.TestCase):
+    def test_firstTest(self):
+        print("This is my first yniu test case")
+if __name__=="__main__":
+    unittest.main()
+
+
+import unittest
+from selenium import webdriver
+
+class SearvhEngune(unittest.TestCase):
+    def test_google(self):
+        self.driver=webdriver.Chrome('C:\Selenium\chromedriver')
+        self.driver.get('https://www.google.com/')
+        print("dddddddddddddddddddddddddddddddd", self.driver.title)
+        self.driver.close()
+
+
+    def tesst_bing(self):
+        self.driver=webdriver.Chrome('C:\Selenium\chromedriver')
+        self.driver.get('https://www.amazon.com/')
+        print("tttttttttttttttttttttttttttttttttttttttttttttt", self.driver.title)
+        self.driver.close()
+if __name__=='__main__':
+    unittest.main()
+
+========================================================================================================================================================================================
+
+
+import unittest
+
+def setUpModule():
+    print("setUpModule")
+def tearDownModule():
+    print("tearDownModule")
+class AppTesting(unittest.TestCase):
+    @classmethod
+    def setUp(self):
+        print("login page")
+    @classmethod
+    def tearDown(self):
+        print("this logout test")
+    @classmethod
+    def setUpClass(cls):
+        print("applicatonn opened")
+    @classmethod
+    def tearDownClass(cls):
+        print("application closed")
+    def test_search(self):
+        print("test script one")
+    def test_advancedsearch(selfs):
+        print("test case two")
+    def test_add(self):
+        print("test case three")
+if __name__=='__main__':
+    unittest.main()
+
+setUpModule---------------[::Before class started setUpModule will be started]
+
+setUpclass---------------[::before all setUp methods]
+setUp--------------------[::before test methods]
+
+print(1)
+teardown--------------------[after test methods]
+setUp
+print(2)
+teardown
+setUp
+print(3)
+teardown
+tearDownclass---------------[::after all setUp methods]
+teatDownModule--------------[::after class started setUpModule will be started]
+
+
+===========================================================================================================================================================================================
+
+SKIPPING TEST:
+*skipTest
+**skiptest with reason
+***skip test with based on condition
+
+
+1.Skiptest:
+
+import unittest
+class appte_ting(unittest.TestCase):
+    @unittest.SkipTest
+    def testing(self):
+        print("this is skipping test")
+    def test_add(self):
+        print("thus is adv search")
+    def test_nect(self):
+        print("test next level")
+    def test_last(self):
+        print("testimg clsoing stage")
+    @unittest.SkipTest
+    def test_aftercomplete(self):
+        print("testing almost completed")
+    def test_logout(self):
+        print("test logout done")
+if __name__=="__main__":
+    unittest.main()
+-----------------------------------------------------------------------------------
+
+2.SKIP method with reason:
+
+import unittest
+class appte_ting(unittest.TestCase):
+    @unittest.SkipTest
+    def testing(self):
+        print("this is skipping test")
+    def test_add(self):
+        print("thus is adv search")
+    def test_nect(self):
+        print("test next level")
+    def test_last(self):
+        print("testimg clsoing stage")
+    @unittest.skip("I am skipping this test method becasue it not yet devolped")
+    def test_aftercomplete(self):
+        print("testing almost completed")
+    def test_logout(self):
+        print("test logout done")
+if __name__=="__main__":
+    unittest.main()
+
+
+.....................................Output.............................
+   C:\Users\Admin\PycharmProjects\pythonSelenium\venv\Scripts\python.exe "C:\Program Files\JetBrains\PyCharm Community Edition 2022.1\plugins\python-ce\helpers\pycharm\_jb_unittest_runner.py" --path C:/Users/Admin/PycharmProjects/pythonSelenium/test.py
+Testing started at 21:33 ...
+Launching unittests with arguments python -m unittest C:/Users/Admin/PycharmProjects/pythonSelenium/test.py in C:\Users\Admin\PycharmProjects\pythonSelenium
+
+thus is adv search
+
+
+Ran 5 tests in 0.013s
+
+OK (skipped=1)
+
+Skipped: I am skipping this test method becasue it not yet devolped
+testimg clsoing stage
+test logout done
+test next level
+
+Process finished with exit code 0
+---------------------------------------------------------------------------------------
+3.Skiptest with based on if condition:
+import unittest
+class appte_ting(unittest.TestCase):
+    @unittest.SkipTest
+    def testing(self):
+        print("this is skipping test")
+    def test_add(self):
+        print("thus is adv search")
+    def test_nect(self):
+        print("test next level")
+    def test_last(self):
+        print("testimg clsoing stage")
+    @unittest.skip("I am skipping this test method becasue it not yet devolped")
+    def test_aftercomplete(self):
+        print("testing almost completed")
+    @unittest.skipIf(1==2,"one is equals to one")******************************************if condtion not stisfied 
+    def test_logout(self):
+        print("test logout done--------------------------------------------------------")
+if __name__=="__main__":
+    unittest.main()
+
+.............................Output......................................................................................................
+
+C:\Users\Admin\PycharmProjects\pythonSelenium\venv\Scripts\python.exe "C:\Program Files\JetBrains\PyCharm Community Edition 2022.1\plugins\python-ce\helpers\pycharm\_jb_unittest_runner.py" --path C:/Users/Admin/PycharmProjects/pythonSelenium/test.py
+Testing started at 21:39 ...
+Launching unittests with arguments python -m unittest C:/Users/Admin/PycharmProjects/pythonSelenium/test.py in C:\Users\Admin\PycharmProjects\pythonSelenium
+
+
+
+Ran 5 tests in 0.013s
+
+OK (skipped=1)
+
+Process finished with exit code 0
+thus is adv search
+
+Skipped: I am skipping this test method becasue it not yet devolped
+testimg clsoing stage
+test logout done--------------------------------------------------------
+test next level
+
+
+
+example if Satisfies..
+
+import unittest
+class appte_ting(unittest.TestCase):
+    @unittest.SkipTest
+    def testing(self):
+        print("this is skipping test")
+    def test_add(self):
+        print("thus is adv search")
+    def test_nect(self):
+        print("test next level")
+    def test_last(self):
+        print("testimg clsoing stage")
+    @unittest.skip("I am skipping this test method becasue it not yet devolped")
+    def test_aftercomplete(self):
+        print("testing almost completed")
+    @unittest.skipIf(1==1,"one is equals to one")
+    def test_logout(self):
+        print("test logout done--------------------------------------------------------")
+if __name__=="__main__":
+    unittest.main()
+
+
+C:\Users\Admin\PycharmProjects\pythonSelenium\venv\Scripts\python.exe "C:\Program Files\JetBrains\PyCharm Community Edition 2022.1\plugins\python-ce\helpers\pycharm\_jb_unittest_runner.py" --path C:/Users/Admin/PycharmProjects/pythonSelenium/test.py
+Testing started at 21:43 ...
+Launching unittests with arguments python -m unittest C:/Users/Admin/PycharmProjects/pythonSelenium/test.py in C:\Users\Admin\PycharmProjects\pythonSelenium
+
+thus is adv search
+
+Skipped: I am skipping this test method becasue it not yet devolped
+testimg clsoing stage
+
+Skipped: one is equals to one
+
+
+Ran 5 tests in 0.015s
+
+OK (skipped=2)
+test next level
+
+Process finished with exit code 0
+
+
+=================================================
+
+
+Assert method:
+1.AssertEqual(expectedresult,actualresult,"comment")
+2.AssertNotEqual(expectedresult,actualresult,"comment")
+3.AssertIsNone(elements)
+4.AssertIsNotNone(elements)
+5.AssertIs(100,100)
+6.AssertIsNot(100,100)
+7.AssertIn('In','India')
+8.AssertNotIn('In','India')
+9.AssertGreater('In','India')
+10.AssertgeaterEqual('In','India')
+11.AssertLesser('In','India')
+12.AssertLesserEqual('In','India')
+13.AssertTrue('In'=='India')
+14.AssertFalse('In'=='India')
+====================================================================================***** 
+Test Suite:
+
+import unittest
+from 1 import a
+from 1 import b
+from 2 import c
+from 2 import d
+abc=unittest.TestLoader().loadTestsFromTestCase(a)
+abc1=unittest.TestLoader().loadTestsFromTestCase(b)
+abc2=unittest.TestLoader().loadTestsFromTestCase(c)
+abc3=unittest.TestLoader().loadTestsFromTestCase(d)
+x = unittest.3(abc,abc1)
+y = unittest.3(abc2,abc3)
+z = unittest.3(abc,abc1,abc2,abc3)
+unittest.TextTestRunner(verbosity=2).run(z)
+
+
+======================================================================================================================
+Feature:
+  Scenario: logo presence on OrangeHRM home page
+    Given launch chrome browser
+    When open orange hrm homepage
+    Then verify that the logo present on page
+    And close brower
+
+
+
+from behave import *
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+@given('launch chrome browser')
+def step_impl(context):
+    driver=webdriver.Chrome("C:\Selenium\chromedriver")
+
+@when('open orange hrm homepage')
+def step_impl(context):
+    context.driver.get("https://opensource-demo.orangehrm.live.com/")
+
+@then('verify that the logo present on page')
+def step_impl(context):
+    status=context.driver.find_element(By.XPATH,"[//div[@id='diclogo']//img").is_dispalyed()
+    assert status is True
+@then ('close browser')
+def closebrowser(context):
+    context.driver.close()
+
+
+
+
